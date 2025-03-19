@@ -10,12 +10,21 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Entity
+@Table(name = "movie")
 public class Movie {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "movie_id_generator")
     private Long id;
 
     private String title;
+
     private String genre;
+
     private String rating;
+
     private Integer duration;
+
     private Integer releaseYear;
+
 }
