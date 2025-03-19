@@ -1,4 +1,4 @@
-package com.att.tdp.popcorn_palace.repository;
+package com.att.tdp.popcorn_palace.repositories;
 
 import com.att.tdp.popcorn_palace.domain.TicketBooking;
 import org.springframework.data.repository.CrudRepository;

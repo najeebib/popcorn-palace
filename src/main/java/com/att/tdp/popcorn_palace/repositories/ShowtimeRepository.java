@@ -1,4 +1,4 @@
-package com.att.tdp.popcorn_palace.repository;
+package com.att.tdp.popcorn_palace.repositories;
 
 import com.att.tdp.popcorn_palace.domain.Showtime;
 import org.springframework.data.repository.CrudRepository;
