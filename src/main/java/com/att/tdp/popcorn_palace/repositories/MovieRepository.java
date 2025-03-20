@@ -1,6 +1,6 @@
 package com.att.tdp.popcorn_palace.repositories;
 
-import com.att.tdp.popcorn_palace.domain.MovieEntity;
+import com.att.tdp.popcorn_palace.domain.entities.MovieEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
