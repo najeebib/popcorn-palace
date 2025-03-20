@@ -11,13 +11,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity
 @Table(name = "showtime")
-public class Showtime {
+public class ShowtimeEntity {
     @Id
     private Long id;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "movie_id")
-    private Movie movie;
+    private MovieEntity movieEntity;
 
     private String theater;
     private Integer price;

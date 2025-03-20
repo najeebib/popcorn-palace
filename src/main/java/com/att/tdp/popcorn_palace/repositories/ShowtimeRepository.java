@@ -1,9 +1,9 @@
 package com.att.tdp.popcorn_palace.repositories;
 
-import com.att.tdp.popcorn_palace.domain.Showtime;
+import com.att.tdp.popcorn_palace.domain.ShowtimeEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ShowtimeRepository extends CrudRepository<Showtime, Long> {
+public interface ShowtimeRepository extends CrudRepository<ShowtimeEntity, Long> {
 }

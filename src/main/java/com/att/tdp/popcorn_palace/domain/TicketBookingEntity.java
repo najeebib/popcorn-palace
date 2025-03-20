@@ -12,14 +12,14 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity
 @Table(name = "ticket_booking")
-public class TicketBooking {
+public class TicketBookingEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ticket_booking_id_generator")
     private Long id;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "showtime_id")
-    private Showtime showtime;
+    private ShowtimeEntity showtimeEntity;
 
     private int seatNumber;
     private String customerName;
