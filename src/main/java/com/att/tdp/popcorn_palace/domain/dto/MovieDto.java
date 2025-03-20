@@ -10,8 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class MovieDto {
-    private Long id;
-
     private String title;
 
     private String genre;

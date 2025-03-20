@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class TicketBookingDto {
 
-    private ShowtimeDto showtime;
+    private Long showtimeId;
 
     private int seatNumber;
-    private String customerName;
+    private String userId;
 }

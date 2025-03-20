@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class TicketBookingEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ticket_booking_id_generator")
+    @SequenceGenerator(name = "ticket_booking_id_generator", sequenceName = "ticket_booking_id_sequence", allocationSize = 1)
     private Long id;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -22,5 +23,5 @@ public class TicketBookingEntity {
     private ShowtimeEntity showtime;
 
     private int seatNumber;
-    private String customerName;
+    private String userId;
 }

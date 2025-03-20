@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TicketBookingRepository extends CrudRepository<TicketBookingEntity, Long> {
+    boolean existsByShowtimeIdAndSeatNumber(Long showtimeId, int seatNumber);
 }

@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.OffsetDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,6 +16,7 @@ import lombok.NoArgsConstructor;
 public class ShowtimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "showtime_id_generator")
+    @SequenceGenerator(name = "showtime_id_generator", sequenceName = "showtime_id_sequence", allocationSize = 1)
     private Long id;
 
     @ManyToOne
@@ -22,6 +25,6 @@ public class ShowtimeEntity {
 
     private String theater;
     private Integer price;
-    private Long startTime;
-    private Long endTime;
+    private OffsetDateTime startTime;
+    private OffsetDateTime endTime;
 }

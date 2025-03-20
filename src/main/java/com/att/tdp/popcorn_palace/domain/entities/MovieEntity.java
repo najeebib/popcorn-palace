@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class MovieEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "movie_id_generator")
+    @SequenceGenerator(name = "movie_id_generator", sequenceName = "movie_id_sequence", allocationSize = 1)
     private Long id;
 
     private String title;

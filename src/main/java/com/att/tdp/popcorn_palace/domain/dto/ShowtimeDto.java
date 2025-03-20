@@ -10,16 +10,19 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.OffsetDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class ShowtimeDto {
 
-    private MovieDto movie;
+    private Long movieId;
 
     private String theater;
     private Integer price;
-    private Long startTime;
-    private Long endTime;
+    private OffsetDateTime startTime;
+    private OffsetDateTime endTime;
+
 }
