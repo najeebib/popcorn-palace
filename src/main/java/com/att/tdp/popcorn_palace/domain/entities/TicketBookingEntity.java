@@ -1,4 +1,4 @@
-package com.att.tdp.popcorn_palace.domain;
+package com.att.tdp.popcorn_palace.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -19,7 +19,7 @@ public class TicketBookingEntity {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "showtime_id")
-    private ShowtimeEntity showtimeEntity;
+    private ShowtimeEntity showtime;
 
     private int seatNumber;
     private String customerName;

@@ -1,6 +1,5 @@
-package com.att.tdp.popcorn_palace.domain;
+package com.att.tdp.popcorn_palace.domain.dto;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,11 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
-@Table(name = "movie")
-public class MovieEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "movie_id_generator")
+public class MovieDto {
     private Long id;
 
     private String title;
@@ -26,5 +21,4 @@ public class MovieEntity {
     private Integer duration;
 
     private Integer releaseYear;
-
 }

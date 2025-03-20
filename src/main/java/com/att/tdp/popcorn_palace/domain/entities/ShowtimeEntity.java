@@ -1,4 +1,4 @@
-package com.att.tdp.popcorn_palace.domain;
+package com.att.tdp.popcorn_palace.domain.entities;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,11 +13,12 @@ import lombok.NoArgsConstructor;
 @Table(name = "showtime")
 public class ShowtimeEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "showtime_id_generator")
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "movie_id")
-    private MovieEntity movieEntity;
+    private MovieEntity movie;
 
     private String theater;
     private Integer price;
