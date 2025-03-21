@@ -9,4 +9,6 @@ public interface ShowtimeService {
     ShowtimeDto createShowtime(ShowtimeDto showtimeDto);
     Optional<ShowtimeEntity> getShowtimeById(Long id);
     void fullUpdateShowtime(Long id, ShowtimeDto showtimeDto);
+
+    void deleteShowtime(Long id);
 }

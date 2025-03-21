@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MovieRepository extends CrudRepository<MovieEntity, Long> {
     MovieEntity findByTitle(String title);
+    void deleteByTitle(String title);
 }

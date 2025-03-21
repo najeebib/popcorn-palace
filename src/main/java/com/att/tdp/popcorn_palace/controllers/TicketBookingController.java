@@ -18,7 +18,7 @@ public class TicketBookingController {
         this.ticketBookingService = ticketBookingService;
     }
 
-    @PostMapping(path = "/ticketBookings")
+    @PostMapping(path = "/bookings")
     public ResponseEntity<String> createTicketBooking(@RequestBody TicketBookingDto ticketBooking) {
         TicketBookingEntity saved = ticketBookingService.createTicketBooking(ticketBooking);
         return ResponseEntity.status(HttpStatus.CREATED)

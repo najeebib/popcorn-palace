@@ -2,8 +2,13 @@ package com.att.tdp.popcorn_palace.services.impl;
 
 import com.att.tdp.popcorn_palace.domain.dto.MovieDto;
 import com.att.tdp.popcorn_palace.domain.entities.MovieEntity;
+import com.att.tdp.popcorn_palace.domain.entities.ShowtimeEntity;
+import com.att.tdp.popcorn_palace.domain.entities.TicketBookingEntity;
 import com.att.tdp.popcorn_palace.repositories.MovieRepository;
+import com.att.tdp.popcorn_palace.repositories.ShowtimeRepository;
+import com.att.tdp.popcorn_palace.repositories.TicketBookingRepository;
 import com.att.tdp.popcorn_palace.services.MovieService;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -16,9 +21,13 @@ import java.util.stream.StreamSupport;
 public class MovieServiceImpl implements MovieService {
 
     private MovieRepository movieRepository;
+    private ShowtimeRepository showtimeRepository;
+    private TicketBookingRepository ticketBookingRepository;
 
-    public MovieServiceImpl(MovieRepository movieRepository) {
+    public MovieServiceImpl(MovieRepository movieRepository, ShowtimeRepository showtimeRepository, TicketBookingRepository ticketBookingRepository) {
         this.movieRepository = movieRepository;
+        this.showtimeRepository = showtimeRepository;
+        this.ticketBookingRepository = ticketBookingRepository;
     }
 
     @Override
@@ -70,5 +79,33 @@ public class MovieServiceImpl implements MovieService {
         existingMovie.setReleaseYear(movieDto.getReleaseYear());
 
         movieRepository.save(existingMovie);
+    }
+
+    @Override
+    @Transactional
+    public void deleteMovie(String title) {
+        MovieEntity movie = movieRepository.findByTitle(title);
+        if (movie == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie with title " + title + " not found");
+        }
+
+        List<ShowtimeEntity> showtimes = showtimeRepository.findByMovieId(movie.getId());
+        if (showtimes.isEmpty()) {
+            movieRepository.deleteByTitle(title);
+            return;
+        }
+
+        for (ShowtimeEntity showtime : showtimes) {
+            List<TicketBookingEntity> bookings = ticketBookingRepository.findByShowtimeId(showtime.getId());
+
+            if (!bookings.isEmpty()) {
+                ticketBookingRepository.deleteAll(bookings);
+            }
+        }
+
+        showtimeRepository.deleteAll(showtimes);
+
+        movieRepository.deleteByTitle(title);
+
     }
 }

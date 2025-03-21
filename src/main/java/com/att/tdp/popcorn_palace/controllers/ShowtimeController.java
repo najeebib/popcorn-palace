@@ -52,6 +52,15 @@ public class ShowtimeController {
         } catch (ResponseStatusException ex) {
             return new ResponseEntity<>(ex.getReason(), ex.getStatusCode());
         }
+    }
 
+    @DeleteMapping(path = "/showtimes/{id}")
+    public ResponseEntity<Void> deleteShowtime(@PathVariable("id") Long id) {
+        try {
+            this.showtimeService.deleteShowtime(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (ResponseStatusException ex) {
+            return new ResponseEntity<>(ex.getStatusCode());
+        }
     }
 }

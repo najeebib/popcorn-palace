@@ -41,4 +41,15 @@ public class MovieController {
         }
 
     }
+
+    @DeleteMapping(path = "/movies/{movieTitle}")
+    public ResponseEntity<Void> deleteMovie(@PathVariable("movieTitle")String movieTitle) {
+        try {
+            this.movieService.deleteMovie(movieTitle);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (ResponseStatusException ex) {
+            return new ResponseEntity<>(ex.getStatusCode());
+        }
+
+    }
 }

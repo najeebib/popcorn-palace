@@ -11,4 +11,5 @@ public interface MovieService {
     List<MovieDto> getAllMovies();
     Boolean isExists(Long id);
     void fullUpdateMovie(String title, MovieDto movie);
+    void deleteMovie(String title);
 }
