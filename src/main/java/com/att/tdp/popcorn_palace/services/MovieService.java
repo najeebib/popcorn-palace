@@ -9,4 +9,6 @@ public interface MovieService {
     MovieDto createMovie(MovieDto movieEntity);
 
     List<MovieDto> getAllMovies();
+    Boolean isExists(Long id);
+    void fullUpdateMovie(String title, MovieDto movie);
 }

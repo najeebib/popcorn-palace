@@ -45,5 +45,27 @@ public class ShowtimeServiceImpl implements ShowtimeService {
         return  showtimeRepository.findById(id);
     }
 
+    @Override
+    public void fullUpdateShowtime(Long id, ShowtimeDto showtimeDto) {
+        Optional<ShowtimeEntity> showtime = showtimeRepository.findById(id);
+        if (showtime.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Showtime with id " + id + " not found");
+        }
+
+        Long movieId = showtimeDto.getMovieId();
+        MovieEntity movie = movieRepository.findById(movieId)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Movie with id " + movieId + " does not exist"));
+
+        ShowtimeEntity showtimeEntity = showtime.get();
+        showtimeEntity.setMovie(movie);
+        showtimeEntity.setTheater(showtimeDto.getTheater());
+        showtimeEntity.setPrice(showtimeDto.getPrice());
+        showtimeEntity.setStartTime(showtimeDto.getStartTime());
+        showtimeEntity.setEndTime(showtimeDto.getEndTime());
+
+        showtimeRepository.save(showtimeEntity);
+    }
+
 
 }

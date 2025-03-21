@@ -2,10 +2,10 @@ package com.att.tdp.popcorn_palace.controllers;
 
 import com.att.tdp.popcorn_palace.domain.dto.MovieDto;
 import com.att.tdp.popcorn_palace.services.MovieService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class MovieController {
     @PostMapping(path = "/movies")
     public MovieDto createMovie(@RequestBody MovieDto movie) {
 
-        return  this.movieService.createMovie(movie);
+        return this.movieService.createMovie(movie);
 
     }
 
@@ -31,4 +31,14 @@ public class MovieController {
         return this.movieService.getAllMovies();
     }
 
+    @PutMapping(path = "/movies/update/{movieTitle}")
+    public ResponseEntity<Void> fullUpdateMovie(@PathVariable("movieTitle")String movieTitle, @RequestBody MovieDto movie) {
+        try {
+            this.movieService.fullUpdateMovie(movieTitle ,movie);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (ResponseStatusException ex) {
+            return new ResponseEntity<>(ex.getStatusCode());
+        }
+
+    }
 }

@@ -4,7 +4,9 @@ import com.att.tdp.popcorn_palace.domain.dto.MovieDto;
 import com.att.tdp.popcorn_palace.domain.entities.MovieEntity;
 import com.att.tdp.popcorn_palace.repositories.MovieRepository;
 import com.att.tdp.popcorn_palace.services.MovieService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,5 +48,27 @@ public class MovieServiceImpl implements MovieService {
                         .build())
                 .toList();
 
+    }
+
+    @Override
+    public Boolean isExists(Long id) {
+        return movieRepository.existsById(id);
+    }
+
+    @Override
+    public void fullUpdateMovie(String title, MovieDto movieDto) {
+        if(movieRepository.findByTitle(title) == null)
+        {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie with title " + title + " not found");
+        }
+        MovieEntity existingMovie = movieRepository.findByTitle(title);
+
+        existingMovie.setTitle(movieDto.getTitle());
+        existingMovie.setGenre(movieDto.getGenre());
+        existingMovie.setDuration(movieDto.getDuration());
+        existingMovie.setRating(movieDto.getRating());
+        existingMovie.setReleaseYear(movieDto.getReleaseYear());
+
+        movieRepository.save(existingMovie);
     }
 }

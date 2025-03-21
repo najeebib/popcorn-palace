@@ -43,4 +43,15 @@ public class ShowtimeController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Showtime with id " + id + " not found");
         }
     }
+
+    @PutMapping(path = "/showtimes/update/{id}")
+    public ResponseEntity<String> fullUpdateShowtime(@PathVariable("id") Long id, @RequestBody ShowtimeDto showtime) {
+        try {
+            this.showtimeService.fullUpdateShowtime(id, showtime);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (ResponseStatusException ex) {
+            return new ResponseEntity<>(ex.getReason(), ex.getStatusCode());
+        }
+
+    }
 }
