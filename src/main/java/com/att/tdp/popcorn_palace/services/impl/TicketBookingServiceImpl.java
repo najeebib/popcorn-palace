@@ -39,7 +39,6 @@ public class TicketBookingServiceImpl implements TicketBookingService {
                 .build();
 
         return ticketBookingRepository.save(booking);
-
     }
 
 

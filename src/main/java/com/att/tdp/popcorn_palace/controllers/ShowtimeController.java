@@ -1,5 +1,6 @@
 package com.att.tdp.popcorn_palace.controllers;
 
+import com.att.tdp.popcorn_palace.domain.dto.MovieDto;
 import com.att.tdp.popcorn_palace.domain.dto.ShowtimeDto;
 import com.att.tdp.popcorn_palace.domain.entities.ShowtimeEntity;
 import com.att.tdp.popcorn_palace.services.ShowtimeService;
@@ -20,8 +21,13 @@ public class ShowtimeController {
     }
 
     @PostMapping(path = "/showtimes")
-    public ShowtimeDto createShowtime(@RequestBody ShowtimeDto showtime) {
-        return this.showtimeService.createShowtime(showtime);
+    public ResponseEntity<?> createShowtime(@RequestBody ShowtimeDto showtime) {
+        try {
+            ShowtimeDto createdShowtime = this.showtimeService.createShowtime(showtime);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdShowtime);
+        } catch (ResponseStatusException ex) {
+            return ResponseEntity.status(ex.getStatusCode()).body(ex.getReason());
+        }
     }
 
     @GetMapping(path = "/showtimes/{id}")

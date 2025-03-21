@@ -20,15 +20,29 @@ public class MovieController {
     }
 
     @PostMapping(path = "/movies")
-    public MovieDto createMovie(@RequestBody MovieDto movie) {
+    public ResponseEntity<?> createMovie(@RequestBody MovieDto movie) {
+        try {
+            MovieDto createdMovie = this.movieService.createMovie(movie);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdMovie);
+        } catch (ResponseStatusException ex) {
+            return ResponseEntity.status(ex.getStatusCode()).body(ex.getReason());
+        }
 
-        return this.movieService.createMovie(movie);
 
     }
 
     @GetMapping(path = "/movies/all")
-    public List<MovieDto> getAllMovies() {
-        return this.movieService.getAllMovies();
+    public ResponseEntity<?>getAllMovies() {
+        try {
+            List<MovieDto> movies = this.movieService.getAllMovies();
+            if (movies.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No movies found.");
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(movies);
+        } catch (ResponseStatusException ex) {
+            // Return an appropriate message and status code
+            return ResponseEntity.status(ex.getStatusCode()).body(ex.getReason());
+        }
     }
 
     @PutMapping(path = "/movies/update/{movieTitle}")

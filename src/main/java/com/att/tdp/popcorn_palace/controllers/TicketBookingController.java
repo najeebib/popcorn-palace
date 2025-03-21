@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 public class TicketBookingController {
@@ -20,10 +21,14 @@ public class TicketBookingController {
 
     @PostMapping(path = "/bookings")
     public ResponseEntity<String> createTicketBooking(@RequestBody TicketBookingDto ticketBooking) {
-        TicketBookingEntity saved = ticketBookingService.createTicketBooking(ticketBooking);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body("Ticket booked successfully");
+        try {
+            TicketBookingEntity saved = ticketBookingService.createTicketBooking(ticketBooking);
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body("Ticket booked successfully");
 
-
+        } catch (ResponseStatusException ex) {
+            return ResponseEntity.status(ex.getStatusCode())
+                    .body(ex.getReason());
+        }
     }
 }
