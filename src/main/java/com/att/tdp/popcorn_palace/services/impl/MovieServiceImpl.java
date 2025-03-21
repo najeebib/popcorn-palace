@@ -6,13 +6,17 @@ import com.att.tdp.popcorn_palace.repositories.MovieRepository;
 import com.att.tdp.popcorn_palace.services.MovieService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 @Service
 public class MovieServiceImpl implements MovieService {
 
     private MovieRepository movieRepository;
 
-    public MovieServiceImpl(MovieRepository moiveRepository) {
-        this.movieRepository = moiveRepository;
+    public MovieServiceImpl(MovieRepository movieRepository) {
+        this.movieRepository = movieRepository;
     }
 
     @Override
@@ -26,5 +30,21 @@ public class MovieServiceImpl implements MovieService {
                 .build();
         movieRepository.save(movieEntity);
         return  movieDto;
+    }
+
+    @Override
+    public List<MovieDto> getAllMovies() {
+        List<MovieEntity> entities = StreamSupport.stream(movieRepository.findAll().spliterator(), false).toList();
+
+        return entities.stream()
+                .map(entity -> MovieDto.builder()
+                        .title(entity.getTitle())
+                        .genre(entity.getGenre())
+                        .rating(entity.getRating())
+                        .duration(entity.getDuration())
+                        .releaseYear(entity.getReleaseYear())
+                        .build())
+                .toList();
+
     }
 }
