@@ -14,7 +14,7 @@ public class MovieDto {
 
     private String genre;
 
-    private String rating;
+    private Double rating;
 
     private Integer duration;
 

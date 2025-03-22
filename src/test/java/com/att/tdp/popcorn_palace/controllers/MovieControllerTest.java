@@ -20,6 +20,9 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+/**
+ * Test class for MovieController.
+ */
 @WebMvcTest(MovieController.class)
 public class MovieControllerTest {
 
@@ -31,6 +34,9 @@ public class MovieControllerTest {
 
     private MovieDto sampleMovie;
 
+    /**
+     * Sets up the test environment before each test.
+     */
     @BeforeEach
     void setUp() {
         sampleMovie = MovieDto.builder()
@@ -40,6 +46,11 @@ public class MovieControllerTest {
                 .build();
     }
 
+    /**
+     * Tests the successful creation of a movie.
+     *
+     * @throws Exception if an error occurs during the request
+     */
     @Test
     void createMovie_Success() throws Exception {
         Mockito.when(movieService.createMovie(any(MovieDto.class))).thenReturn(sampleMovie);
@@ -51,6 +62,11 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$.title").value("Inception"));
     }
 
+    /**
+     * Tests retrieving all movies when the list is not empty.
+     *
+     * @throws Exception if an error occurs during the request
+     */
     @Test
     void getAllMovies_ReturnsList() throws Exception {
         Mockito.when(movieService.getAllMovies()).thenReturn(Arrays.asList(sampleMovie));
@@ -60,6 +76,11 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$[0].title").value("Inception"));
     }
 
+    /**
+     * Tests retrieving all movies when the list is empty.
+     *
+     * @throws Exception if an error occurs during the request
+     */
     @Test
     void getAllMovies_EmptyList() throws Exception {
         Mockito.when(movieService.getAllMovies()).thenReturn(Collections.emptyList());
@@ -69,6 +90,11 @@ public class MovieControllerTest {
                 .andExpect(content().string("No movies found."));
     }
 
+    /**
+     * Tests the successful deletion of a movie.
+     *
+     * @throws Exception if an error occurs during the request
+     */
     @Test
     void deleteMovie_Success() throws Exception {
         mockMvc.perform(delete("/movies/Inception"))
@@ -77,6 +103,11 @@ public class MovieControllerTest {
         Mockito.verify(movieService).deleteMovie("Inception");
     }
 
+    /**
+     * Tests the successful full update of a movie.
+     *
+     * @throws Exception if an error occurs during the request
+     */
     @Test
     void fullUpdateMovie_Success() throws Exception {
         mockMvc.perform(put("/movies/update/Inception")

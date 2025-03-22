@@ -15,6 +15,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+/**
+ * Test class for TicketBookingController.
+ */
 @WebMvcTest(TicketBookingController.class)
 public class TicketBookingControllerTest {
 
@@ -24,6 +27,11 @@ public class TicketBookingControllerTest {
     @MockBean
     private TicketBookingService ticketBookingService;
 
+    /**
+     * Tests the successful creation of a ticket booking.
+     *
+     * @throws Exception if an error occurs during the request
+     */
     @Test
     void createTicketBooking_Success() throws Exception {
         TicketBookingEntity bookingEntity = new TicketBookingEntity();

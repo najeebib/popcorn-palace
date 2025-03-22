@@ -10,10 +10,18 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * Global exception handler for handling exceptions across the whole application.
+ */
 @ControllerAdvice
 public class GlobalExceptionHandler {
-
+    /**
+     * Handles ResponseStatusException and constructs a detailed error response.
+     *
+     * @param ex the exception to handle
+     * @param request the HTTP request during which the exception occurred
+     * @return a ResponseEntity containing the error details and the appropriate HTTP status
+     */
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<Map<String, Object>> handleResponseStatusException(ResponseStatusException ex, HttpServletRequest request) {
         HttpStatus httpStatus = HttpStatus.valueOf(ex.getStatusCode().value());

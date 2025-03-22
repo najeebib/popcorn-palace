@@ -1,6 +1,5 @@
 package com.att.tdp.popcorn_palace.controllers;
 
-import com.att.tdp.popcorn_palace.domain.dto.MovieDto;
 import com.att.tdp.popcorn_palace.domain.dto.ShowtimeDto;
 import com.att.tdp.popcorn_palace.domain.entities.ShowtimeEntity;
 import com.att.tdp.popcorn_palace.services.ShowtimeService;
@@ -10,16 +9,27 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
-
+/**
+ * REST controller for managing showtimes.
+ */
 @RestController
 public class ShowtimeController {
     private ShowtimeService showtimeService;
 
-
+    /**
+     * Constructor for ShowtimeController.
+     *
+     * @param showtimeService the service to manage showtimes
+     */
     public ShowtimeController(ShowtimeService showtimeService) {
         this.showtimeService = showtimeService;
     }
-
+    /**
+     * Creates a new showtime.
+     *
+     * @param showtime the showtime to create
+     * @return the ResponseEntity with status 201 (Created) and the created showtime in body, or with status 400 (Bad Request) if the showtime is invalid
+     */
     @PostMapping(path = "/showtimes")
     public ResponseEntity<?> createShowtime(@RequestBody ShowtimeDto showtime) {
         try {
@@ -29,7 +39,12 @@ public class ShowtimeController {
             return ResponseEntity.status(ex.getStatusCode()).body(ex.getReason());
         }
     }
-
+    /**
+     * Retrieves a showtime by its ID.
+     *
+     * @param id the ID of the showtime to retrieve
+     * @return the ResponseEntity with status 200 (OK) and the showtime in body, or with status 404 (Not Found) if the showtime is not found
+     */
     @GetMapping(path = "/showtimes/{id}")
     public ResponseEntity<ShowtimeDto> getShowtimeById(@PathVariable("id") Long id) {
         Optional<ShowtimeEntity> showtime = this.showtimeService.getShowtimeById(id);
@@ -49,8 +64,14 @@ public class ShowtimeController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Showtime with id " + id + " not found");
         }
     }
-
-    @PutMapping(path = "/showtimes/update/{id}")
+    /**
+     * Updates an existing showtime.
+     *
+     * @param id the ID of the showtime to update
+     * @param showtime the showtime to update
+     * @return the ResponseEntity with status 200 (OK) or with status 404 (Not Found) if the showtime is not found
+     */
+    @PostMapping(path = "/showtimes/update/{id}")
     public ResponseEntity<String> fullUpdateShowtime(@PathVariable("id") Long id, @RequestBody ShowtimeDto showtime) {
         try {
             this.showtimeService.fullUpdateShowtime(id, showtime);
@@ -59,7 +80,12 @@ public class ShowtimeController {
             return new ResponseEntity<>(ex.getReason(), ex.getStatusCode());
         }
     }
-
+    /**
+     * Deletes a showtime.
+     *
+     * @param id the ID of the showtime to delete
+     * @return the ResponseEntity with status 200 (OK) or with status 404 (Not Found) if the showtime is not found
+     */
     @DeleteMapping(path = "/showtimes/{id}")
     public ResponseEntity<Void> deleteShowtime(@PathVariable("id") Long id) {
         try {

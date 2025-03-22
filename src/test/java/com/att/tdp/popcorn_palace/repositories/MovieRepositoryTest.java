@@ -8,19 +8,25 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Test class for MovieRepository.
+ */
 @DataJpaTest
 class MovieRepositoryTest {
 
     @Autowired
     private MovieRepository movieRepository;
 
+    /**
+     * Tests saving and finding a movie by its title.
+     */
     @Test
     @DisplayName("Should save and find movie by title")
     void testFindByTitle() {
         MovieEntity movie = MovieEntity.builder()
                 .title("Inception")
                 .genre("Sci-Fi")
-                .rating("PG-13")
+                .rating(9.1)
                 .duration(148)
                 .releaseYear(2010)
                 .build();
@@ -33,13 +39,16 @@ class MovieRepositoryTest {
         assertThat(found.getGenre()).isEqualTo("Sci-Fi");
     }
 
+    /**
+     * Tests deleting a movie by its title.
+     */
     @Test
     @DisplayName("Should delete movie by title")
     void testDeleteByTitle() {
         MovieEntity movie = MovieEntity.builder()
                 .title("Titanic")
                 .genre("Drama")
-                .rating("PG-13")
+                .rating(9.1)
                 .duration(195)
                 .releaseYear(1997)
                 .build();

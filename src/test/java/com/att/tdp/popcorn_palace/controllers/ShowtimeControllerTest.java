@@ -22,6 +22,9 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+/**
+ * Test class for ShowtimeController.
+ */
 @WebMvcTest(ShowtimeController.class)
 public class ShowtimeControllerTest {
 
@@ -34,12 +37,15 @@ public class ShowtimeControllerTest {
     private ShowtimeDto sampleDto;
     private ShowtimeEntity sampleEntity;
 
+    /**
+     * Sets up the test environment before each test.
+     */
     @BeforeEach
     void setUp() {
         sampleDto = ShowtimeDto.builder()
                 .movieId(1L)
                 .theater("Theater 1")
-                .price(10)
+                .price(10.0)
                 .startTime(OffsetDateTime.now())
                 .endTime(OffsetDateTime.now().plusHours(2))
                 .build();
@@ -51,11 +57,16 @@ public class ShowtimeControllerTest {
         sampleEntity.setId(1L);
         sampleEntity.setMovie(movieEntity);
         sampleEntity.setTheater("Theater 1");
-        sampleEntity.setPrice(10);
+        sampleEntity.setPrice(10.0);
         sampleEntity.setStartTime(sampleDto.getStartTime());
         sampleEntity.setEndTime(sampleDto.getEndTime());
     }
 
+    /**
+     * Tests the successful creation of a showtime.
+     *
+     * @throws Exception if an error occurs during the request
+     */
     @Test
     void createShowtime_Success() throws Exception {
         Mockito.when(showtimeService.createShowtime(any(ShowtimeDto.class))).thenReturn(sampleDto);
@@ -67,6 +78,11 @@ public class ShowtimeControllerTest {
                 .andExpect(jsonPath("$.theater").value("Theater 1"));
     }
 
+    /**
+     * Tests retrieving a showtime by its ID when it exists.
+     *
+     * @throws Exception if an error occurs during the request
+     */
     @Test
     void getShowtimeById_Success() throws Exception {
         Mockito.when(showtimeService.getShowtimeById(1L)).thenReturn(Optional.of(sampleEntity));
@@ -76,6 +92,11 @@ public class ShowtimeControllerTest {
                 .andExpect(jsonPath("$.theater").value("Theater 1"));
     }
 
+    /**
+     * Tests retrieving a showtime by its ID when it does not exist.
+     *
+     * @throws Exception if an error occurs during the request
+     */
     @Test
     void getShowtimeById_NotFound() throws Exception {
         Mockito.when(showtimeService.getShowtimeById(1L)).thenReturn(Optional.empty());
@@ -84,6 +105,11 @@ public class ShowtimeControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    /**
+     * Tests the successful full update of a showtime.
+     *
+     * @throws Exception if an error occurs during the request
+     */
     @Test
     void fullUpdateShowtime_Success() throws Exception {
         mockMvc.perform(put("/showtimes/update/1")
@@ -94,6 +120,11 @@ public class ShowtimeControllerTest {
         Mockito.verify(showtimeService).fullUpdateShowtime(eq(1L), any(ShowtimeDto.class));
     }
 
+    /**
+     * Tests the successful deletion of a showtime.
+     *
+     * @throws Exception if an error occurs during the request
+     */
     @Test
     void deleteShowtime_Success() throws Exception {
         mockMvc.perform(delete("/showtimes/1"))

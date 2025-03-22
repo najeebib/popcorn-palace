@@ -9,16 +9,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-
+/**
+ * REST controller for managing ticket bookings.
+ */
 @RestController
 public class TicketBookingController {
     private TicketBookingService ticketBookingService;
 
-
+    /**
+     * Constructor for TicketBookingController.
+     *
+     * @param ticketBookingService the service to manage ticket bookings
+     */
     public TicketBookingController(TicketBookingService ticketBookingService) {
         this.ticketBookingService = ticketBookingService;
     }
-
+    /**
+     * Creates a new ticket booking.
+     *
+     * @param ticketBooking the ticket booking to create
+     * @return the ResponseEntity with status 201 (Created) and a success message, or with status 400 (Bad Request) if there is an error
+     */
     @PostMapping(path = "/bookings")
     public ResponseEntity<String> createTicketBooking(@RequestBody TicketBookingDto ticketBooking) {
         try {

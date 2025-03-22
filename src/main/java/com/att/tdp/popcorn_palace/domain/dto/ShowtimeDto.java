@@ -21,7 +21,7 @@ public class ShowtimeDto {
     private Long movieId;
 
     private String theater;
-    private Integer price;
+    private Double price;
     private OffsetDateTime startTime;
     private OffsetDateTime endTime;
 

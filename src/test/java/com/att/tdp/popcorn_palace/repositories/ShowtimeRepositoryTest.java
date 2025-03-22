@@ -12,6 +12,9 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Test class for ShowtimeRepository.
+ */
 @DataJpaTest
 class ShowtimeRepositoryTest {
 
@@ -21,13 +24,16 @@ class ShowtimeRepositoryTest {
     @Autowired
     private MovieRepository movieRepository;
 
+    /**
+     * Tests finding showtimes by movie ID.
+     */
     @Test
     @DisplayName("Should find showtimes by movie")
     void testFindByMovieId() {
         MovieEntity movie = MovieEntity.builder()
                 .title("Avatar")
                 .genre("Fantasy")
-                .rating("PG-13")
+                .rating(9.1)
                 .duration(162)
                 .releaseYear(2009)
                 .build();
@@ -36,7 +42,7 @@ class ShowtimeRepositoryTest {
         ShowtimeEntity showtime = ShowtimeEntity.builder()
                 .movie(movie)
                 .theater("Theater 1")
-                .price(15)
+                .price(15.0)
                 .startTime(OffsetDateTime.now())
                 .endTime(OffsetDateTime.now().plusHours(2))
                 .build();
@@ -44,16 +50,19 @@ class ShowtimeRepositoryTest {
 
         List<ShowtimeEntity> showtimes = showtimeRepository.findByMovieId(movie.getId());
         assertThat(showtimes).hasSize(1);
-        assertThat(showtimes.get(0).getTheater()).isEqualTo("Theater 1");
+        assertThat(showtimes.getFirst().getTheater()).isEqualTo("Theater 1");
     }
 
+    /**
+     * Tests deleting showtimes by movie ID.
+     */
     @Test
     @DisplayName("Should delete showtimes by movieId")
     void testDeleteByMovieId() {
         MovieEntity movie = MovieEntity.builder()
                 .title("The Matrix")
                 .genre("Action")
-                .rating("R")
+                .rating(9.1)
                 .duration(136)
                 .releaseYear(1999)
                 .build();
@@ -62,7 +71,7 @@ class ShowtimeRepositoryTest {
         ShowtimeEntity showtime = ShowtimeEntity.builder()
                 .movie(movie)
                 .theater("Theater 2")
-                .price(12)
+                .price(12.0)
                 .startTime(OffsetDateTime.now())
                 .endTime(OffsetDateTime.now().plusHours(2))
                 .build();

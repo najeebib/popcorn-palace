@@ -16,20 +16,33 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-
+/**
+ * Service implementation for managing movies.
+ */
 @Service
 public class MovieServiceImpl implements MovieService {
 
     private MovieRepository movieRepository;
     private ShowtimeRepository showtimeRepository;
     private TicketBookingRepository ticketBookingRepository;
-
+    /**
+     * Constructs a new MovieServiceImpl with the specified repositories.
+     *
+     * @param movieRepository the movie repository
+     * @param showtimeRepository the showtime repository
+     * @param ticketBookingRepository the ticket booking repository
+     */
     public MovieServiceImpl(MovieRepository movieRepository, ShowtimeRepository showtimeRepository, TicketBookingRepository ticketBookingRepository) {
         this.movieRepository = movieRepository;
         this.showtimeRepository = showtimeRepository;
         this.ticketBookingRepository = ticketBookingRepository;
     }
-
+    /**
+     * Creates a new movie.
+     *
+     * @param movieDto the movie data transfer object
+     * @return the created movie data transfer object
+     */
     @Override
     public MovieDto createMovie(MovieDto movieDto) {
         MovieEntity movieEntity = MovieEntity.builder()
@@ -42,7 +55,11 @@ public class MovieServiceImpl implements MovieService {
         movieRepository.save(movieEntity);
         return  movieDto;
     }
-
+    /**
+     * Retrieves all movies.
+     *
+     * @return a list of movie data transfer objects
+     */
     @Override
     public List<MovieDto> getAllMovies() {
         List<MovieEntity> entities = StreamSupport.stream(movieRepository.findAll().spliterator(), false).toList();
@@ -58,12 +75,22 @@ public class MovieServiceImpl implements MovieService {
                 .toList();
 
     }
-
+    /**
+     * Checks if a movie exists by its ID.
+     *
+     * @param id the ID of the movie
+     * @return true if the movie exists, false otherwise
+     */
     @Override
     public Boolean isExists(Long id) {
         return movieRepository.existsById(id);
     }
-
+    /**
+     * Fully updates a movie by its title.
+     *
+     * @param title the title of the movie to update
+     * @param movieDto the movie data transfer object with updated information
+     */
     @Override
     public void fullUpdateMovie(String title, MovieDto movieDto) {
         if(movieRepository.findByTitle(title) == null)
@@ -80,7 +107,11 @@ public class MovieServiceImpl implements MovieService {
 
         movieRepository.save(existingMovie);
     }
-
+    /**
+     * Deletes a movie by its title.
+     *
+     * @param title the title of the movie to delete
+     */
     @Override
     @Transactional
     public void deleteMovie(String title) {

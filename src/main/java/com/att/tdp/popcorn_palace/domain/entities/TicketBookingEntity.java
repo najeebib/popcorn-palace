@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+/**
+ * Entity class representing a ticket booking.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+/**
+ * Entity class representing a movie.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,7 +24,7 @@ public class MovieEntity {
 
     private String genre;
 
-    private String rating;
+    private Double rating;
 
     private Integer duration;
 

@@ -13,6 +13,9 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Test class for TicketBookingRepository.
+ */
 @DataJpaTest
 class TicketBookingRepositoryTest {
 
@@ -25,13 +28,16 @@ class TicketBookingRepositoryTest {
     @Autowired
     private MovieRepository movieRepository;
 
+    /**
+     * Tests checking the existence of a ticket booking by showtime ID and seat number.
+     */
     @Test
     @DisplayName("Should check existence by showtime and seatNumber")
     void testExistsByShowtimeIdAndSeatNumber() {
         MovieEntity movie = MovieEntity.builder()
                 .title("Interstellar")
                 .genre("Sci-Fi")
-                .rating("PG-13")
+                .rating(9.1)
                 .duration(169)
                 .releaseYear(2014)
                 .build();
@@ -40,7 +46,7 @@ class TicketBookingRepositoryTest {
         ShowtimeEntity showtime = ShowtimeEntity.builder()
                 .movie(movie)
                 .theater("Theater 3")
-                .price(10)
+                .price(10.0)
                 .startTime(OffsetDateTime.now())
                 .endTime(OffsetDateTime.now().plusHours(3))
                 .build();
@@ -57,13 +63,16 @@ class TicketBookingRepositoryTest {
         assertThat(exists).isTrue();
     }
 
+    /**
+     * Tests finding ticket bookings by showtime ID.
+     */
     @Test
     @DisplayName("Should find bookings by showtime")
     void testFindByShowtimeId() {
         MovieEntity movie = MovieEntity.builder()
                 .title("Joker")
                 .genre("Drama")
-                .rating("R")
+                .rating(9.1)
                 .duration(122)
                 .releaseYear(2019)
                 .build();
@@ -72,7 +81,7 @@ class TicketBookingRepositoryTest {
         ShowtimeEntity showtime = ShowtimeEntity.builder()
                 .movie(movie)
                 .theater("Theater 4")
-                .price(9)
+                .price(9.0)
                 .startTime(OffsetDateTime.now())
                 .endTime(OffsetDateTime.now().plusHours(2))
                 .build();

@@ -6,7 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.OffsetDateTime;
-
+/**
+ * Entity class representing a showtime.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,7 +26,7 @@ public class ShowtimeEntity {
     private MovieEntity movie;
 
     private String theater;
-    private Integer price;
+    private Double price;
     private OffsetDateTime startTime;
     private OffsetDateTime endTime;
 }
