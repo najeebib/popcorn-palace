@@ -47,6 +47,16 @@ public class ShowtimeServiceImpl implements ShowtimeService {
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "Movie with id " + movieId + " does not exist"));
 
+        // Check for overlapping showtimes
+        List<ShowtimeEntity> overlappingShowtimes = showtimeRepository.findOverlappingShowtimes(
+                showtimeDto.getTheater(), showtimeDto.getStartTime(), showtimeDto.getEndTime());
+
+        if (!overlappingShowtimes.isEmpty()) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "There is already a showtime scheduled in this theater that overlaps with the given time.");
+        }
+
         ShowtimeEntity showtime = ShowtimeEntity.builder()
                 .movie(movie)
                 .theater(showtimeDto.getTheater())
@@ -56,7 +66,7 @@ public class ShowtimeServiceImpl implements ShowtimeService {
                 .build();
 
         showtimeRepository.save(showtime);
-        return  showtimeDto;
+        return showtimeDto;
     }
     /**
      * Retrieves a showtime by its ID.
