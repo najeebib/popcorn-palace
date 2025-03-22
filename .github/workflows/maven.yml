@@ -19,14 +19,17 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-
+          
+      - name: Set up Docker Compose (v2 plugin)
+        run: sudo apt-get update && sudo apt-get install docker-compose-plugin -y
+        
       - name: Start PostgreSQL with Docker Compose
-        run: docker-compose up -d
+        run: docker compose up -d
 
       - name: Wait for DB to be ready
         run: |
           echo "Waiting for PostgreSQL to be ready..."
-          sleep 10  # Optional: improve with healthcheck/wait-for-it
+          sleep 10
 
       - name: Build with Maven
         run: ./mvnw clean install
