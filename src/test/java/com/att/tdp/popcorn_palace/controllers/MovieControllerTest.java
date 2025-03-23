@@ -10,7 +10,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -43,6 +42,8 @@ public class MovieControllerTest {
                 .title("Inception")
                 .genre("Sci-Fi")
                 .duration(148)
+                .rating(8.8)
+                .releaseYear(2010)
                 .build();
     }
 
@@ -57,9 +58,13 @@ public class MovieControllerTest {
 
         mockMvc.perform(post("/movies")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"title\":\"Inception\",\"genre\":\"Sci-Fi\",\"duration\":148}"))
+                        .content("{\"title\":\"Inception\",\"genre\":\"Sci-Fi\",\"duration\":148,\"rating\":8.8,\"releaseYear\":2010}"))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.title").value("Inception"));
+                .andExpect(jsonPath("$.title").value("Inception"))
+                .andExpect(jsonPath("$.genre").value("Sci-Fi"))
+                .andExpect(jsonPath("$.duration").value(148))
+                .andExpect(jsonPath("$.rating").value(8.8))
+                .andExpect(jsonPath("$.releaseYear").value(2010));
     }
 
     /**
@@ -73,7 +78,11 @@ public class MovieControllerTest {
 
         mockMvc.perform(get("/movies/all"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].title").value("Inception"));
+                .andExpect(jsonPath("$[0].title").value("Inception"))
+                .andExpect(jsonPath("$[0].genre").value("Sci-Fi"))
+                .andExpect(jsonPath("$[0].duration").value(148))
+                .andExpect(jsonPath("$[0].rating").value(8.8))
+                .andExpect(jsonPath("$[0].releaseYear").value(2010));
     }
 
     /**
@@ -110,9 +119,9 @@ public class MovieControllerTest {
      */
     @Test
     void fullUpdateMovie_Success() throws Exception {
-        mockMvc.perform(put("/movies/update/Inception")
+        mockMvc.perform(post("/movies/update/Inception")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"title\":\"Inception\",\"genre\":\"Sci-Fi\",\"duration\":148}"))
+                        .content("{\"title\":\"Inception\",\"genre\":\"Sci-Fi\",\"duration\":148,\"rating\":8.8,\"releaseYear\":2010}"))
                 .andExpect(status().isOk());
 
         Mockito.verify(movieService).fullUpdateMovie(eq("Inception"), any(MovieDto.class));

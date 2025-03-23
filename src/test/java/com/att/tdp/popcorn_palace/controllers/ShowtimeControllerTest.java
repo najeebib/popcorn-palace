@@ -112,7 +112,7 @@ public class ShowtimeControllerTest {
      */
     @Test
     void fullUpdateShowtime_Success() throws Exception {
-        mockMvc.perform(put("/showtimes/update/1")
+        mockMvc.perform(post("/showtimes/update/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"movieId\":1,\"theater\":\"Theater 1\",\"price\":10.5,\"startTime\":\"" + sampleDto.getStartTime() + "\",\"endTime\":\"" + sampleDto.getEndTime() + "\"}"))
                 .andExpect(status().isOk());
